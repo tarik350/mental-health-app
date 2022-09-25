@@ -78,6 +78,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     var size = MediaQuery.of(context).size;
     var textStyle = TextStyle(
         color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
+    GlobalKey<FormState> formkey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.blue[800],
       bottomNavigationBar: ClipRRect(
@@ -145,27 +146,73 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       height: 20,
                     ),
                     //the search bar
-                    Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                          color: Colors.blue.shade600,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(children: const <Widget>[
-                            Icon(
-                              Icons.search,
-                              size: 40,
+
+                    Form(
+                      key: formkey,
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        cursorColor: Colors.white,
+                        decoration: InputDecoration(
+                          filled: true,
+                          labelText: 'Search',
+                          labelStyle: TextStyle(
                               color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          contentPadding: EdgeInsets.all(20),
+                          fillColor: Colors.blue.shade600,
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.white,
+                              size: 40,
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('Search',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20))
-                          ])),
+                          ),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'can\'t search empty field';
+                          } else
+                            return null;
+                        },
+                        onFieldSubmitted: ((value) {
+                          if (formkey.currentState!.validate()) {
+                            formkey.currentState!.save();
+                          }
+                        }),
+                        onSaved: (newValue) {
+                          print(newValue);
+                        },
+                      ),
                     ),
+
+                    // Container(
+                    //   height: 70,
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.blue.shade600,
+                    //       borderRadius: BorderRadius.circular(20)),
+                    //   child: Padding(
+                    //       padding: const EdgeInsets.all(12),
+                    //       child: Row(children: const <Widget>[
+                    //         Icon(
+                    //           Icons.search,
+                    //           size: 40,
+                    //           color: Colors.white,
+                    //         ),
+                    //         SizedBox(
+                    //           width: 5,
+                    //         ),
+                    //         Text('Search',
+                    //             style: TextStyle(
+                    //                 color: Colors.white, fontSize: 20))
+                    //       ])),
+                    // ),
                     //the text just bellow the search bar
                     const SizedBox(
                       height: 25,
@@ -250,74 +297,73 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50)),
                 child: Container(
-                  color: Colors.grey.shade200,
-                  child: Expanded(
-                      child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 8,
-                      ),
-
-                      Center(
-                          child: Container(
-                        height: 10,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade500,
-                            borderRadius: BorderRadius.circular(20)),
-                      )),
-
-                      //the exercise row
-
-                      Padding(
-                        padding: EdgeInsets.all(25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              'Exersises',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Icon(
-                              Icons.more_horiz,
-                              size: 35,
-                            )
-                          ],
+                    color: Colors.grey.shade200,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      //list view of exercises
-                      Expanded(
-                        child:
-                            ListView(scrollDirection: Axis.vertical, children: [
-                          ExerciseTile(
-                            title: 'Speaking skill',
-                            subtitle: '16 Exercise',
-                            leadingIcon: Icons.favorite,
-                            iconColor: Colors.orange,
+
+                        Center(
+                            child: Container(
+                          height: 10,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade500,
+                              borderRadius: BorderRadius.circular(20)),
+                        )),
+
+                        //the exercise row
+
+                        Padding(
+                          padding: EdgeInsets.all(25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Exersises',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.more_horiz,
+                                size: 35,
+                              )
+                            ],
                           ),
-                          ExerciseTile(
-                            title: 'Reading spead',
-                            subtitle: '13 Exercise',
-                            leadingIcon: Icons.person,
-                            iconColor: Colors.blue,
-                          ),
-                          ExerciseTile(
-                            title: 'Writing skill',
-                            subtitle: '14 Exercise',
-                            leadingIcon: Icons.person,
-                            iconColor: Colors.red.shade700,
-                          )
-                        ]),
-                      ),
-                    ],
-                  )),
-                ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        //list view of exercises
+                        Expanded(
+                          child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                ExerciseTile(
+                                  title: 'Speaking skill',
+                                  subtitle: '16 Exercise',
+                                  leadingIcon: Icons.favorite,
+                                  iconColor: Colors.orange,
+                                ),
+                                ExerciseTile(
+                                  title: 'Reading spead',
+                                  subtitle: '13 Exercise',
+                                  leadingIcon: Icons.person,
+                                  iconColor: Colors.blue,
+                                ),
+                                ExerciseTile(
+                                  title: 'Writing skill',
+                                  subtitle: '14 Exercise',
+                                  leadingIcon: Icons.person,
+                                  iconColor: Colors.red.shade700,
+                                )
+                              ]),
+                        ),
+                      ],
+                    )),
               ),
             ),
           ])),
