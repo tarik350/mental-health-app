@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentalhealthapp/utils/emotion_faces.dart';
+import 'package:mentalhealthapp/utils/exercise_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -79,11 +80,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
     return Scaffold(
       backgroundColor: Colors.blue[800],
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-      ]),
+      bottomNavigationBar: ClipRRect(
+        child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: false,
+            iconSize: 30,
+            elevation: 10,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person), label: 'Profile'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.message), label: 'message'),
+            ]),
+      ),
       body: SafeArea(
           bottom: false,
           child: Column(children: [
@@ -282,64 +292,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         height: 20,
                       ),
                       //list view of exercises
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            decoration: BoxDecoration(color: Colors.white),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(20),
-                                          decoration: const BoxDecoration(
-                                              color: Colors.orange),
-                                          child: const Icon(
-                                            Icons.favorite,
-                                            color: Colors.white,
-                                            size: 40,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 12,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          const Text('Speaking Skills',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold)),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            '16 Exercises',
-                                            style: TextStyle(
-                                                color: Colors.grey[500],
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Icon(Icons.more_horiz)
-                                ],
-                              ),
-                            ),
+                      Expanded(
+                        child:
+                            ListView(scrollDirection: Axis.vertical, children: [
+                          ExerciseTile(
+                            title: 'Speaking skill',
+                            subtitle: '16 Exercise',
+                            leadingIcon: Icons.favorite,
+                            iconColor: Colors.orange,
                           ),
-                        ),
-                      )
+                          ExerciseTile(
+                            title: 'Reading spead',
+                            subtitle: '13 Exercise',
+                            leadingIcon: Icons.person,
+                            iconColor: Colors.blue,
+                          ),
+                          ExerciseTile(
+                            title: 'Writing skill',
+                            subtitle: '14 Exercise',
+                            leadingIcon: Icons.person,
+                            iconColor: Colors.blue,
+                          )
+                        ]),
+                      ),
                     ],
                   )),
                 ),
