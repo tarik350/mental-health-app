@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             title: 'Writing skill',
                             subtitle: '14 Exercise',
                             leadingIcon: Icons.person,
-                            iconColor: Colors.blue,
+                            iconColor: Colors.red.shade700,
                           )
                         ]),
                       ),
