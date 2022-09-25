@@ -14,6 +14,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late Animation<double> _heightAnimation;
   late Animation<double> _widthAnimation;
   late Animation<Size> sizeAnimtion;
+  Color badly = Colors.blue.shade600;
+  Color fine = Colors.blue.shade600;
+  Color well = Colors.blue.shade600;
+  Color excellent = Colors.blue.shade600;
+
+  late Animation<Color> colorAnimation =
+      TweenSequence<Color>(<TweenSequenceItem<Color>>[
+    TweenSequenceItem<Color>(
+        tween: Tween<Color>(begin: Colors.red, end: Colors.yellow), weight: 50),
+    TweenSequenceItem<Color>(
+        tween: Tween<Color>(begin: Colors.red, end: Colors.yellow), weight: 50)
+  ]).animate(_controller);
   String emoji = '😀';
   double elevation = 0;
   BorderSide _borderSide = BorderSide(color: Colors.black, width: 0);
@@ -22,12 +34,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _heightAnimation = Tween<double>(begin: 20, end: 500).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeIn,
-      ),
-    );
+
+    // colorAnimation = TweenSequence<Color>(<TweenSequenceItem<Color>>[
+    //   TweenSequenceItem<Color>(
+    //       tween: Tween<Color>(begin: Colors.red, end: Colors.yellow.shade100),
+    //       weight: 50),
+    //   TweenSequenceItem<Color>(
+    //       tween: Tween<Color>(begin: Colors.red, end: Colors.yellow.shade100),
+    //       weight: 50)
+    // ]).animate(_controller);
     sizeAnimtion = Tween<Size>(begin: Size(0, 0), end: Size(250, 250))
         .animate(_controller);
     _widthAnimation = Tween<double>(begin: 0, end: 100).animate(
@@ -243,10 +258,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  emoji = '🤣';
+                                  badly = Colors.red.shade600;
+                                  fine = Colors.blue.shade600;
+                                  well = Colors.blue.shade600;
+                                  excellent = Colors.blue.shade600;
                                 });
                               },
-                              child: EmotionFace(emotion: emoji),
+                              child: Emotion(
+                                emotion: '😔',
+                                containerColor: badly,
+                              ),
                             ),
                             const SizedBox(
                               height: 8,
@@ -254,12 +275,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             Text(
                               'badly',
                               style: textStyle,
-                            )
+                            ),
                           ],
                         ),
                         Column(
                           children: [
-                            EmotionFace(emotion: '😊'),
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    badly = Colors.blue.shade600;
+                                    fine = Colors.red.shade600;
+                                    well = Colors.blue.shade600;
+                                    excellent = Colors.blue.shade600;
+                                  });
+                                },
+                                child: Emotion(
+                                  emotion: '😊',
+                                  containerColor: fine,
+                                )),
                             SizedBox(
                               height: 8,
                             ),
@@ -271,7 +304,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
                         Column(
                           children: [
-                            EmotionFace(emotion: '😀'),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  badly = Colors.blue.shade600;
+                                  fine = Colors.blue.shade600;
+                                  well = Colors.red.shade600;
+                                  excellent = Colors.blue.shade600;
+                                });
+                              },
+                              child: Emotion(
+                                emotion: '😀',
+                                containerColor: well,
+                              ),
+                            ),
                             SizedBox(
                               height: 8,
                             ),
@@ -280,7 +326,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
                         Column(
                           children: [
-                            EmotionFace(emotion: '😁'),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  badly = Colors.blue.shade600;
+                                  fine = Colors.blue.shade600;
+                                  well = Colors.blue.shade600;
+                                  excellent = Colors.red.shade600;
+                                });
+                              },
+                              child: Emotion(
+                                emotion: '😁',
+                                containerColor: excellent,
+                              ),
+                            ),
                             SizedBox(
                               height: 8,
                             ),

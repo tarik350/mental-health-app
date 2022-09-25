@@ -21,7 +21,15 @@ class ExerciseTile extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+            BoxShadow(
+                color: Colors.red,
+                blurRadius: 20,
+                spreadRadius: 20,
+                offset: Offset(0, 10))
+          ]),
+
+          // duration: Duration(seconds: 2),
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
@@ -33,7 +41,13 @@ class ExerciseTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(color: iconColor),
+                        decoration: BoxDecoration(boxShadow: [
+                          BoxShadow(
+                              color: Colors.red,
+                              blurRadius: 20,
+                              spreadRadius: 20,
+                              offset: Offset(0, 10))
+                        ], color: iconColor),
                         child: Icon(
                           leadingIcon,
                           color: Colors.white,
